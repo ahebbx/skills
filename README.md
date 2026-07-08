@@ -7,13 +7,20 @@
 ### Claude Code / Codex / Cursor 等（一行命令）
 
 ```bash
-npx skills add ahebbx/what-to-eat
+npx skills add ahebbx/skills
 ```
 
 装完重开会话即可。也可以只装到指定工具：
 
 ```bash
-npx skills add ahebbx/what-to-eat -a claude-code -a codex
+npx skills add ahebbx/skills -a claude-code -a codex
+```
+
+### Claude Code 插件市场
+
+```
+/plugin marketplace add ahebbx/skills
+/plugin install what-to-eat@ahebbx-skills
 ```
 
 ### Claude 桌面版 / claude.ai
@@ -33,11 +40,17 @@ npx skills add ahebbx/what-to-eat -a claude-code -a codex
 ## 结构
 
 ```
-├── SKILL.md              # 主流程
-├── references/
-│   ├── seasonal.md       # 时令食材、天气→饮食映射
-│   └── dishes.md         # 菜品库（快手菜/硬菜/外卖/早餐）
-└── what-to-eat.skill     # Claude 桌面版一键安装包
+├── .claude-plugin/
+│   └── marketplace.json          # 插件市场清单（ahebbx-skills）
+├── plugins/what-to-eat/
+│   ├── .claude-plugin/
+│   │   └── plugin.json           # 插件元信息
+│   └── skills/what-to-eat/
+│       ├── SKILL.md              # 主流程
+│       └── references/
+│           ├── seasonal.md       # 时令食材、天气→饮食映射
+│           └── dishes.md         # 菜品库（快手菜/硬菜/外卖/早餐）
+└── what-to-eat.skill             # Claude 桌面版一键安装包
 ```
 
 ## License
