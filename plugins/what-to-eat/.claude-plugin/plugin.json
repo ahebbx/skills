@@ -1,6 +1,6 @@
 {
   "name": "what-to-eat",
   "description": "「今天吃什么」决策助手：综合天气时令、饮食记录、营养均衡和你的状态，给出1个首选+2个备选，并维护饮食日志越用越懂你",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": { "name": "ahebbx" }
 }
