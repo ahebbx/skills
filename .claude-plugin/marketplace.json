@@ -1,0 +1,11 @@
+{
+  "name": "ahebbx-skills",
+  "owner": { "name": "ahebbx" },
+  "plugins": [
+    {
+      "name": "what-to-eat",
+      "source": "./plugins/what-to-eat",
+      "description": "「今天吃什么」决策助手：综合天气时令、饮食记录、营养均衡，直接告诉你这顿吃什么"
+    }
+  ]
+}
