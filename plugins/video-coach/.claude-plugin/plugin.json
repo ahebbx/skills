@@ -1,0 +1,6 @@
+{
+  "name": "video-coach",
+  "description": "视频表达教练:本地转写练习视频+抽帧看画面,内容和呈现双轨点评,每天一个改进点,维护练习日志追踪进步",
+  "version": "1.0.0",
+  "author": { "name": "ahebbx" }
+}

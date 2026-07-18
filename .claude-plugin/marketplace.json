@@ -6,6 +6,11 @@
       "name": "what-to-eat",
       "source": "./plugins/what-to-eat",
       "description": "「今天吃什么」决策助手：综合天气时令、饮食记录、营养均衡，直接告诉你这顿吃什么"
+    },
+    {
+      "name": "video-coach",
+      "source": "./plugins/video-coach",
+      "description": "视频表达教练：本地转写练习视频+抽帧看画面，双轨点评，每天一个改进点，练习日志追踪进步"
     }
   ]
 }
