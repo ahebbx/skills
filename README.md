@@ -6,6 +6,7 @@
 |------|--------|
 | [今天吃什么 (what-to-eat)](#今天吃什么-what-to-eat) | 终结每天"吃什么"的纠结，越用越懂你 |
 | [视频表达教练 (video-coach)](#视频表达教练-video-coach) | 每天录视频练表达，AI 本地转写+看画面，双轨点评你的口播 |
+| [每日英语练习 (daily-english-practice)](#每日英语练习-daily-english-practice) | 每天 15 分钟：当天新闻练阅读、真实场景练写作，弱点靶向复习 |
 
 ## 安装
 
@@ -27,11 +28,12 @@ npx skills add ahebbx/skills -a claude-code -a codex
 /plugin marketplace add ahebbx/skills
 /plugin install what-to-eat@ahebbx-skills
 /plugin install video-coach@ahebbx-skills
+/plugin install daily-english-practice@ahebbx-skills
 ```
 
 ### Claude 桌面版 / claude.ai
 
-下载对应的 `.skill` 文件（[what-to-eat.skill](./what-to-eat.skill) / [video-coach.skill](./video-coach.skill)），发到 Claude 对话里，点卡片上的 **Save skill** 即可。
+下载对应的 `.skill` 文件（[what-to-eat.skill](./what-to-eat.skill) / [video-coach.skill](./video-coach.skill) / [daily-english-practice.skill](./daily-english-practice.skill)），发到 Claude 对话里，点卡片上的 **Save skill** 即可。
 
 ---
 
@@ -76,6 +78,29 @@ npx skills add ahebbx/skills -a claude-code -a codex
 
 ---
 
+## 每日英语练习 (daily-english-practice)
+
+每天 15 分钟的英语读写私教：用当天真实的美国新闻做分级阅读（关键词汇 + 理解题），写作任务在「总结短文」和「给 AI 写英文提示词」之间交替，再从你的历史弱点里挑 1–2 个编织进当天的课做靶向复习。作答后温和批改、中文讲解，并维护一份学习记录——练得越多，课越贴你的水平。
+
+### 使用
+
+安装后直接说：
+
+- "今日英语练习"
+- "开始今天的英语"
+- "daily English practice"
+
+第一次会问你的姓名、英语水平和学习目标；之后每次开始先读 `~/.daily-english-practice/学习记录.md`（家目录统一路径，任何工具里触发都是同一份记录），结束把新发现的弱点、难度校准和当天话题记回去。
+
+### 定时自动练
+
+技能本身不含调度，接到各平台的定时能力上即可：
+
+- **Claude 桌面版 / claude.ai**：建一个 Scheduled Task，提示词写「使用 daily-english-practice skill 开始今日练习」
+- **Claude Code**：用 `/loop` 或定时任务跑同样的提示词
+
+---
+
 ## 结构
 
 ```
@@ -87,14 +112,19 @@ npx skills add ahebbx/skills -a claude-code -a codex
 │   │   └── skills/what-to-eat/
 │   │       ├── SKILL.md          # 主流程
 │   │       └── references/       # 时令食材、菜品库
-│   └── video-coach/
+│   ├── video-coach/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/video-coach/
+│   │       ├── SKILL.md          # 双轨点评流程
+│   │       └── scripts/
+│   │           └── prepare.sh    # 定位视频→抢救未存储→转写→抽帧
+│   └── daily-english-practice/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/video-coach/
-│           ├── SKILL.md          # 双轨点评流程
-│           └── scripts/
-│               └── prepare.sh    # 定位视频→抢救未存储→转写→抽帧
+│       └── skills/daily-english-practice/
+│           └── SKILL.md          # 课程主流程
 ├── what-to-eat.skill             # Claude 桌面版一键安装包
-└── video-coach.skill
+├── video-coach.skill
+└── daily-english-practice.skill
 ```
 
 ## License
