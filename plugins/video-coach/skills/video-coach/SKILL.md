@@ -11,9 +11,11 @@ description: 每日口播/表达练习视频的教练点评。当用户说"看�
 
 ### 1. 准备素材
 
-运行本 skill 目录下的 `scripts/prepare.sh [视频文件]`(不传参自动找最新)。它会:定位视频(含抢救 QuickTime 里录了没按 ⌘S 的未存储录制)→ 存档 → whisper 本地转写(有缓存跳过)→ 每 20 秒抽一帧。输出 `VIDEO / DURATION / TRANSCRIPT / FRAMES_DIR / FRAMES(帧数)`。帧文件名自带时间戳:`f_0020s.jpg` = 第 20 秒。
+运行本 skill 目录下的 `scripts/prepare.py [视频文件]`(不传参自动找最新)。macOS/Linux 用 `python3 scripts/prepare.py`,Windows 用 `python scripts\prepare.py`(没有 `python` 时试 `py`)。它会:定位视频(macOS 上还会抢救 QuickTime 里录了没按 ⌘S 的未存储录制)→ 存档 → whisper 本地转写(有缓存跳过)→ 每 20 秒抽一帧。输出 `VIDEO / DURATION / TRANSCRIPT / FRAMES_DIR / FRAMES(帧数)`。帧文件名自带时间戳:`f_0020s.jpg` = 第 20 秒。
 
-可配置环境变量:`VIDEO_COACH_DIR`(存档目录,默认 `~/Movies/录视频练习`)、`VIDEO_COACH_MODEL`(whisper 模型路径)、`VIDEO_COACH_LANG`(默认 zh)、`VIDEO_COACH_LOG`(练习日志文件路径)。依赖缺失时脚本会给出安装命令。
+默认存档目录:macOS `~/Movies/录视频练习`,Windows / Linux `~/Videos/录视频练习`(Windows 的 `~` 即 `C:\Users\<用户名>`)。可配置环境变量:`VIDEO_COACH_DIR`(存档目录)、`VIDEO_COACH_MODEL`(whisper 模型路径)、`VIDEO_COACH_WHISPER`(whisper-cli 不在 PATH 时指定路径)、`VIDEO_COACH_LANG`(默认 zh)、`VIDEO_COACH_LOG`(练习日志文件路径)。
+
+依赖缺失时脚本会按当前系统给出安装命令,照着装好再重跑;缺 whisper 模型时运行 `prepare.py --download-model` 自动下载(国内先设环境变量 `HF_ENDPOINT=https://hf-mirror.com`)。
 
 ### 2. 读字幕稿,看抽帧
 
@@ -41,7 +43,7 @@ description: 每日口播/表达练习视频的教练点评。当用户说"看�
 
 1. `VIDEO_COACH_LOG` 环境变量指定的文件
 2. 用户 Obsidian vault 中已有的练习日志——**写入前必须验证**:文件须含「录视频练习日志」标题或既往 `### YYYY-MM-DD(练习` 条目;验证不过,一律不写,回落到 3(防止按名搜索命中用户的其他文件,把点评插进无关笔记)
-3. `$VIDEO_COACH_DIR/练习日志.md`(不存在则创建)
+3. 视频存档目录下的 `练习日志.md`(不存在则创建)
 
 新条目在最上。「练习NN」= 存档目录里累计第 N 条(与视频文件名一致)。模板:
 
@@ -73,7 +75,8 @@ description: 每日口播/表达练习视频的教练点评。当用户说"看�
 
 | 坑 | 处理 |
 |----|------|
-| 视频在 QuickTime 里没保存 | prepare.sh 自动从 Autosave 抢救,无需用户操作 |
+| 视频在 QuickTime 里没保存(macOS) | prepare.py 自动从 Autosave 抢救,无需用户操作 |
+| Windows / Linux 录完找不到视频 | 把视频放进存档目录,或直接把视频路径传给 prepare.py |
 | 口头禅数量靠印象估 | 必须逐词数字幕稿,给出分布 |
 | 一次给五个改进点 | 只给一个;其余记在心里下次再说 |
 | 只夸或只批 | 双轨各找真实亮点和最大问题 |

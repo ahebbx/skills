@@ -10,14 +10,14 @@ description: >-
 
 ## 数据文件(存放路径要求,必须遵守)
 
-所有方案和历史记录**只能**存放在固定路径 `~/.health-plan/` 下。该路径独立于任何 agent 工具(Cursor、Claude Code 等),无论从哪个工具触发本 skill,都读写同一份数据,保证历史记录连续完整。
+所有方案和历史记录**只能**存放在固定路径 `~/.health-plan/` 下。该路径独立于任何 agent 工具(Cursor、Claude Code 等),无论从哪个工具触发本 skill,都读写同一份数据,保证历史记录连续完整。Windows 上 `~` 即 `C:\Users\<用户名>`;文件一律 UTF-8 编码读写。
 
 - `~/.health-plan/plan.md` — 当前生效的健康方案(改版时更新版本号,不另建新文件)
 - `~/.health-plan/progress.md` — 进度日志,按日期倒序追加(最新在最上面)
 
 规则:
 
-1. 目录不存在时先创建(`mkdir -p ~/.health-plan`)。
+1. 目录不存在时先创建(macOS/Linux:`mkdir -p ~/.health-plan`;Windows PowerShell:`New-Item -ItemType Directory -Force ~/.health-plan`)。
 2. 禁止把方案或进度写到其他位置(skill 自身目录、项目目录、临时文件等)。
 3. progress.md 只追加、不删改历史条目;修正错误时新增一条更正记录。
 4. 用户询问历史记录、执行率、数据趋势时,一律以 `~/.health-plan/progress.md` 为准。

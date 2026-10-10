@@ -1,6 +1,6 @@
 # ahebbx/skills
 
-个人 AI 技能（Agent Skills）仓库，把日常真实在用的流程做成可安装的技能。每个技能就是一份 `SKILL.md`，**Codex、Cursor、Claude Code 等支持 Agent Skills 的 AI Agent 都能装**：
+个人 AI 技能（Agent Skills）仓库，把日常真实在用的流程做成可安装的技能。每个技能就是一份 `SKILL.md`，**Codex、Cursor、Claude Code 等支持 Agent Skills 的 AI Agent 都能装，macOS / Windows / Linux 通用**：
 
 | 技能 | 一句话 |
 |------|--------|
@@ -9,24 +9,81 @@
 | [每日英语练习 (daily-english-practice)](#每日英语练习-daily-english-practice) | 每天 15 分钟：当天新闻练阅读、真实场景练写作，弱点靶向复习 |
 | [健康方案 (health-plan)](#健康方案-health-plan) | 运动、饮食、睡眠、压力四维方案，打卡记录、定期复盘 |
 
-## 安装
+## 使用教程
 
-一行命令，自动识别你装了哪些 AI Agent（Codex / Cursor / Claude Code …）并装进去：
+macOS、Windows、Linux 都能用，三步装好。
 
-```bash
-npx skills add ahebbx/skills
-```
+### 第 1 步：装 Node.js（只需一次）
 
-装完重开会话即可。只想装某个技能或某个 Agent：
+安装命令要用到 Node.js 自带的 `npx`。先打开终端检查一下，能显示版本号（如 `v22.x`）就跳过这一步：
 
 ```bash
-npx skills add ahebbx/skills -s what-to-eat
-npx skills add ahebbx/skills -a codex -a cursor
+node -v
 ```
 
-**没有命令行？** 打开对应的 `SKILL.md`，把内容复制给任意 AI 当提示词也能用（网页聊天没有文件系统，记录类功能会跳过）。
+| 系统 | 打开终端 | 安装 Node.js |
+|------|----------|--------------|
+| macOS | 启动台搜「终端」 | `brew install node`，或到 [nodejs.org](https://nodejs.org/zh-cn) 下载安装包 |
+| Windows | 开始菜单搜「PowerShell」 | `winget install OpenJS.NodeJS.LTS`，或到 [nodejs.org](https://nodejs.org/zh-cn) 下载安装包；装完**关掉重开** PowerShell |
+| Linux | `Ctrl + Alt + T` | 到 [nodejs.org](https://nodejs.org/zh-cn/download) 按发行版装 LTS 版（系统软件源里的版本可能太旧） |
+
+### 第 2 步：安装技能
+
+在终端里运行（三个系统命令一样）：
+
+```bash
+npx skills add ahebbx/skills -g
+```
+
+它会自动识别你电脑上装了哪些 AI Agent（Codex / Cursor / Claude Code …），按提示确认即可。`-g` 表示装到用户目录，在任何文件夹里都能用；不加的话只装进当前文件夹的项目。
+
+只想装其中一个技能，或只装到某个 Agent：
+
+```bash
+npx skills add ahebbx/skills -g -s what-to-eat
+npx skills add ahebbx/skills -g -a codex -a cursor
+```
+
+> **Windows 报错「无法加载文件 npx.ps1，因为在此系统上禁止运行脚本」？** 把命令里的 `npx` 换成 `npx.cmd` 再运行。
+
+### 第 3 步：重开 Agent，直接说话
+
+关掉 Agent 的当前会话再开一个新的，然后像平时聊天一样说：
+
+```
+你：今天中午吃什么？
+AI：（查天气、看你最近吃过什么）今天就吃番茄牛腩面——降温了来碗热汤面，
+    你前两天都是米饭，换换口味……备选：……
+```
+
+每个技能能说什么，见下面各技能的「使用」。没反应的话，在话里点名技能，比如「用 what-to-eat 推荐一下午饭」。
+
+### 更新与卸载
+
+```bash
+npx skills update -g          # 更新到最新版
+npx skills remove -g          # 选择要卸载的技能
+```
+
+### 数据存在哪
+
+记录都是本机的 Markdown 文件，可以直接打开看、手动改，换 Agent 也不会丢：
+
+| 技能 | macOS / Linux | Windows |
+|------|---------------|---------|
+| 今天吃什么 | `~/.what-to-eat/` | `C:\Users\<用户名>\.what-to-eat\` |
+| 每日英语 | `~/.daily-english-practice/` | `C:\Users\<用户名>\.daily-english-practice\` |
+| 健康方案 | `~/.health-plan/` | `C:\Users\<用户名>\.health-plan\` |
+| 视频教练 | `~/Movies/录视频练习/`（Linux 为 `~/Videos/录视频练习/`） | `C:\Users\<用户名>\Videos\录视频练习\` |
 
 ### 其他安装方式
+
+<details>
+<summary>没有命令行 / 只用网页版 AI</summary>
+
+打开对应技能的 `SKILL.md`（在 `plugins/<技能名>/skills/<技能名>/` 下），把全部内容复制给任意 AI 当提示词就能用。网页聊天读写不了本地文件，所以「记住你吃过什么」这类记录功能会跳过；视频教练需要本地运行脚本，网页版用不了。
+
+</details>
 
 <details>
 <summary>Claude Code 插件市场</summary>
@@ -62,7 +119,7 @@ npx skills add ahebbx/skills -a codex -a cursor
 - "晚上吃啥，累了不想做饭"
 - "早餐推荐一下，包子吃腻了"
 
-第一次会问你城市和状态；之后它会查当天天气、避开你最近 3 天吃过的、照顾营养均衡。吃完说一声吃了什么，它会记进 `~/.what-to-eat/饮食记录.md`（家目录统一路径，不管在哪个 Agent、哪个项目里问都是同一份记录）——记录越多，推荐越准。告诉它忌口（"我不吃香菜"）会永久记住。
+第一次会问你城市和状态；之后它会查当天天气、避开你最近 3 天吃过的、照顾营养均衡。吃完说一声吃了什么，它会记进 `~/.what-to-eat/饮食记录.md`（不管在哪个 Agent、哪个项目里问都是同一份记录）——记录越多，推荐越准。告诉它忌口（"我不吃香菜"）会永久记住。
 
 ---
 
@@ -83,11 +140,27 @@ npx skills add ahebbx/skills -a codex -a cursor
 - "看下今天的视频"
 - "点评一下这条练习视频"
 
-用 macOS 自带的 QuickTime 录（文件 → 新建影片录制）就行，录完忘了按 ⌘S 也没关系——脚本会自动从 QuickTime 未存储的录制里把视频抢救出来。
+AI 会运行脚本找到最新的视频，在本地转写、抽帧，然后点评。也可以直接告诉它视频在哪：「点评一下 D:\录像\今天.mp4」。
 
-**依赖**（macOS）：`brew install ffmpeg whisper-cpp`，外加一个 whisper 模型（缺什么脚本会直接给出安装命令）。
+**怎么录**
 
-**配置**（可选环境变量）：`VIDEO_COACH_DIR` 视频目录（默认 `~/Movies/录视频练习`）、`VIDEO_COACH_MODEL` 模型路径、`VIDEO_COACH_LANG` 转写语言（默认 zh）、`VIDEO_COACH_LOG` 练习日志路径。
+| 系统 | 推荐 | 说明 |
+|------|------|------|
+| macOS | QuickTime（文件 → 新建影片录制） | 录完忘了按 ⌘S 也没关系，脚本会从 QuickTime 未存储的录制里把视频抢救出来 |
+| Windows | 系统自带「相机」应用 | 录好的视频默认在「图片\本机照片」，挪进 `视频\录视频练习`，或直接把路径告诉 AI |
+| Linux | Cheese 或 OBS | 存到 `~/Videos/录视频练习`，或直接把路径告诉 AI |
+
+**依赖**（只需装一次，缺什么脚本都会提示对应命令）：Python 3.8+、ffmpeg、whisper.cpp，外加一个 whisper 语音模型。
+
+| 系统 | ffmpeg | whisper.cpp |
+|------|--------|-------------|
+| macOS | `brew install ffmpeg` | `brew install whisper-cpp` |
+| Windows | `winget install Gyan.FFmpeg` | 到 [whisper.cpp Releases](https://github.com/ggml-org/whisper.cpp/releases) 下载 `whisper-bin-x64.zip`，解压后把文件夹加入 PATH |
+| Linux | `sudo apt install ffmpeg`（或 dnf / pacman） | [从源码编译](https://github.com/ggml-org/whisper.cpp#quick-start)，把 `build/bin` 加入 PATH |
+
+Windows 没有 Python 的话：`winget install Python.Python.3.12`。语音模型（约 1.6GB）让 AI 运行 `prepare.py --download-model` 自动下载，国内网络先设置环境变量 `HF_ENDPOINT=https://hf-mirror.com` 走镜像。
+
+**配置**（可选环境变量）：`VIDEO_COACH_DIR` 视频目录、`VIDEO_COACH_MODEL` 模型路径、`VIDEO_COACH_WHISPER` whisper-cli 路径（不在 PATH 里时用）、`VIDEO_COACH_LANG` 转写语言（默认 zh）、`VIDEO_COACH_LOG` 练习日志路径。
 
 ---
 
@@ -143,7 +216,7 @@ npx skills add ahebbx/skills -a codex -a cursor
 │   │   └── skills/video-coach/
 │   │       ├── SKILL.md          # 双轨点评流程
 │   │       └── scripts/
-│   │           └── prepare.sh    # 定位视频→抢救未存储→转写→抽帧
+│   │           └── prepare.py    # 定位视频→抢救未存储→转写→抽帧（跨平台）
 │   ├── daily-english-practice/
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── skills/daily-english-practice/
@@ -154,7 +227,9 @@ npx skills add ahebbx/skills -a codex -a cursor
 │           └── SKILL.md          # 方案制定、打卡、复盘
 ├── scripts/
 │   └── build-skills.sh           # 打包 dist/*.skill（Claude 桌面版 / 网页版安装包）
+├── tests/                        # 脚本测试（CI 在 macOS / Windows / Linux 上跑）
 └── .github/workflows/
+    ├── test.yml                  # 每次推送跑测试
     └── release.yml               # 推送 v* 标签时自动打包并发布到 Releases
 ```
 
@@ -163,10 +238,10 @@ npx skills add ahebbx/skills -a codex -a cursor
 改完技能后打个版本标签推上去，GitHub Actions 会自动打包所有 `.skill` 并发布到 Releases：
 
 ```bash
-git tag v1.1.0 && git push origin v1.1.0
+git tag v1.2.0 && git push origin v1.2.0
 ```
 
-本地预览打包结果：`./scripts/build-skills.sh`（输出到 `dist/`，已 gitignore）。
+本地预览打包结果：`./scripts/build-skills.sh`（输出到 `dist/`，已 gitignore）；本地跑测试：`python3 -m unittest discover tests`。
 
 ## License
 
