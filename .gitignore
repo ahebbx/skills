@@ -1,0 +1,3 @@
+dist/
+*.skill
+.DS_Store

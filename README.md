@@ -44,7 +44,7 @@ npx skills add ahebbx/skills -a codex -a cursor
 <details>
 <summary>Claude 桌面版 / 网页版（.skill 安装包）</summary>
 
-下载对应的 `.skill` 文件（[what-to-eat.skill](./what-to-eat.skill) / [video-coach.skill](./video-coach.skill) / [daily-english-practice.skill](./daily-english-practice.skill) / [health-plan.skill](./health-plan.skill)），发到对话里，点卡片上的 **Save skill** 即可。
+从 [Releases](https://github.com/ahebbx/skills/releases/latest) 下载对应的 `.skill` 文件（[what-to-eat.skill](https://github.com/ahebbx/skills/releases/latest/download/what-to-eat.skill) / [video-coach.skill](https://github.com/ahebbx/skills/releases/latest/download/video-coach.skill) / [daily-english-practice.skill](https://github.com/ahebbx/skills/releases/latest/download/daily-english-practice.skill) / [health-plan.skill](https://github.com/ahebbx/skills/releases/latest/download/health-plan.skill)），发到对话里，点卡片上的 **Save skill** 即可。
 
 </details>
 
@@ -152,11 +152,21 @@ npx skills add ahebbx/skills -a codex -a cursor
 │       ├── .claude-plugin/plugin.json
 │       └── skills/health-plan/
 │           └── SKILL.md          # 方案制定、打卡、复盘
-├── what-to-eat.skill             # .skill 一键安装包
-├── video-coach.skill
-├── daily-english-practice.skill
-└── health-plan.skill
+├── scripts/
+│   └── build-skills.sh           # 打包 dist/*.skill（Claude 桌面版 / 网页版安装包）
+└── .github/workflows/
+    └── release.yml               # 推送 v* 标签时自动打包并发布到 Releases
 ```
+
+## 发布
+
+改完技能后打个版本标签推上去，GitHub Actions 会自动打包所有 `.skill` 并发布到 Releases：
+
+```bash
+git tag v1.1.0 && git push origin v1.1.0
+```
+
+本地预览打包结果：`./scripts/build-skills.sh`（输出到 `dist/`，已 gitignore）。
 
 ## License
 
