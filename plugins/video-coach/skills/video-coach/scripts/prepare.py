@@ -112,8 +112,8 @@ def main():
     if sys.argv[1:] == ["--download-model"]:
         return download_model()
 
-    for tool in ("ffmpeg", "ffprobe"):
-        shutil.which(tool) or die(f"缺少 {tool}：{INSTALL_FFMPEG}")
+    # 用完整路径调用：Windows 只会自动补 .exe，经 PATH 找到的 .cmd/.bat 包装脚本必须写全路径
+    ffmpeg, ffprobe = (shutil.which(t) or die(f"缺少 {t}：{INSTALL_FFMPEG}") for t in ("ffmpeg", "ffprobe"))
     whisper = find_whisper()
     if not MODEL.is_file():
         die(f"缺少 whisper 模型：{MODEL}\n  运行 {Path(__file__).name} --download-model 自动下载"
@@ -132,14 +132,14 @@ def main():
         die(f"没找到视频：{VIDEO_DIR} 为空{hint}（也可以直接传视频路径）")
     video = video.resolve()
 
-    duration = run("ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", video,
+    duration = run(ffprobe, "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", video,
                    capture_output=True, text=True).stdout.strip()
 
     transcript = video.with_name(f"{video.stem}-字幕.txt")
     if not transcript.is_file() or transcript.stat().st_size == 0:
         # 中间文件用 ASCII 名，避免 Windows 版 whisper-cli 处理中文路径出错
         wav = WORK / "audio.wav"
-        run("ffmpeg", "-y", "-loglevel", "error", "-i", video, "-ar", "16000", "-ac", "1", wav)
+        run(ffmpeg, "-y", "-loglevel", "error", "-i", video, "-ar", "16000", "-ac", "1", wav)
         with open(transcript, "wb") as out:
             run(whisper, "-m", MODEL, "-l", LANG_CODE, "-f", wav, "-np", stdout=out, stderr=subprocess.DEVNULL)
         wav.unlink(missing_ok=True)
@@ -147,7 +147,7 @@ def main():
     frames_dir = WORK / f"frames-{re.sub(r'[^A-Za-z0-9_-]', '_', video.stem)}"
     shutil.rmtree(frames_dir, ignore_errors=True)
     frames_dir.mkdir(parents=True)
-    run("ffmpeg", "-y", "-loglevel", "error", "-i", video, "-vf", "fps=1/20,scale=960:-1",
+    run(ffmpeg, "-y", "-loglevel", "error", "-i", video, "-vf", "fps=1/20,scale=960:-1",
         frames_dir / "tmp_%03d.jpg")
     # 文件名带时间戳（f_0020s.jpg = 第 20 秒），交叉印证时直接对回字幕
     for i, f in enumerate(sorted(frames_dir.glob("tmp_*.jpg"))):
