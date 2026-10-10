@@ -203,34 +203,41 @@ Windows 没有 Python 的话：`winget install Python.Python.3.12`。语音模�
 ## 结构
 
 ```
+ahebbx/skills
 ├── .claude-plugin/
-│   └── marketplace.json          # 插件市场清单（ahebbx-skills）
-├── plugins/
+│   └── marketplace.json              # Claude Code 插件市场清单（ahebbx-skills）
+├── .github/workflows/
+│   ├── test.yml                      # 每次推送在 macOS / Windows / Linux 上跑测试
+│   └── release.yml                   # 推送 v* 标签时自动打包 .skill 并发布到 Releases
+├── docs/superpowers/                 # 开发过程中的设计文档与实现计划
+├── plugins/                          # 技能源码，一个技能一个目录
 │   ├── what-to-eat/
-│   │   ├── .claude-plugin/plugin.json
+│   │   ├── .claude-plugin/plugin.json    # 名称、简介、版本号
 │   │   └── skills/what-to-eat/
-│   │       ├── SKILL.md          # 主流程
-│   │       └── references/       # 时令食材、菜品库
+│   │       ├── SKILL.md                  # 主流程
+│   │       └── references/
+│   │           ├── dishes.md             # 菜品库
+│   │           └── seasonal.md           # 时令食材与天气对照
 │   ├── video-coach/
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── skills/video-coach/
-│   │       ├── SKILL.md          # 双轨点评流程
+│   │       ├── SKILL.md                  # 双轨点评流程
 │   │       └── scripts/
-│   │           └── prepare.py    # 定位视频→抢救未存储→转写→抽帧（跨平台）
+│   │           └── prepare.py            # 定位视频→抢救未存储→转写→抽帧（跨平台）
 │   ├── daily-english-practice/
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── skills/daily-english-practice/
-│   │       └── SKILL.md          # 课程主流程
+│   │       └── SKILL.md                  # 课程主流程
 │   └── health-plan/
 │       ├── .claude-plugin/plugin.json
 │       └── skills/health-plan/
-│           └── SKILL.md          # 方案制定、打卡、复盘
+│           └── SKILL.md                  # 方案制定、打卡、复盘
 ├── scripts/
-│   └── build-skills.sh           # 打包 dist/*.skill（Claude 桌面版 / 网页版安装包）
-├── tests/                        # 脚本测试（CI 在 macOS / Windows / Linux 上跑）
-└── .github/workflows/
-    ├── test.yml                  # 每次推送跑测试
-    └── release.yml               # 推送 v* 标签时自动打包并发布到 Releases
+│   └── build-skills.sh               # 打包 dist/*.skill（Claude 桌面版 / 网页版安装包）
+├── tests/
+│   └── test_video_coach_prepare.py   # prepare.py 冒烟测试
+├── .gitignore                        # 忽略 dist/、*.skill 等构建产物
+└── README.md
 ```
 
 ## 发布
