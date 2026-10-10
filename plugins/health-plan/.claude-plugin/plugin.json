@@ -1,0 +1,6 @@
+{
+  "name": "health-plan",
+  "description": "健康方案规划与进度记录：运动、饮食、睡眠、压力管理四维个性化方案，打卡记录与周期复盘，数据固定存于 ~/.health-plan/",
+  "version": "1.0.2",
+  "author": { "name": "ahebbx" }
+}

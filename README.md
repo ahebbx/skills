@@ -1,39 +1,52 @@
 # ahebbx/skills
 
-个人 AI 技能（Agent Skills）仓库，把日常真实在用的流程做成可安装的技能：
+个人 AI 技能（Agent Skills）仓库，把日常真实在用的流程做成可安装的技能。每个技能就是一份 `SKILL.md`，**Codex、Cursor、Claude Code 等支持 Agent Skills 的 AI Agent 都能装**：
 
 | 技能 | 一句话 |
 |------|--------|
 | [今天吃什么 (what-to-eat)](#今天吃什么-what-to-eat) | 终结每天"吃什么"的纠结，越用越懂你 |
 | [视频表达教练 (video-coach)](#视频表达教练-video-coach) | 每天录视频练表达，AI 本地转写+看画面，双轨点评你的口播 |
 | [每日英语练习 (daily-english-practice)](#每日英语练习-daily-english-practice) | 每天 15 分钟：当天新闻练阅读、真实场景练写作，弱点靶向复习 |
+| [健康方案 (health-plan)](#健康方案-health-plan) | 运动、饮食、睡眠、压力四维方案，打卡记录、定期复盘 |
 
 ## 安装
 
-### Claude Code / Codex / Cursor 等（一行命令）
+一行命令，自动识别你装了哪些 AI Agent（Codex / Cursor / Claude Code …）并装进去：
 
 ```bash
 npx skills add ahebbx/skills
 ```
 
-装完重开会话即可。也可以只装到指定工具：
+装完重开会话即可。只想装某个技能或某个 Agent：
 
 ```bash
-npx skills add ahebbx/skills -a claude-code -a codex
+npx skills add ahebbx/skills -s what-to-eat
+npx skills add ahebbx/skills -a codex -a cursor
 ```
 
-### Claude Code 插件市场
+**没有命令行？** 打开对应的 `SKILL.md`，把内容复制给任意 AI 当提示词也能用（网页聊天没有文件系统，记录类功能会跳过）。
+
+### 其他安装方式
+
+<details>
+<summary>Claude Code 插件市场</summary>
 
 ```
 /plugin marketplace add ahebbx/skills
 /plugin install what-to-eat@ahebbx-skills
 /plugin install video-coach@ahebbx-skills
 /plugin install daily-english-practice@ahebbx-skills
+/plugin install health-plan@ahebbx-skills
 ```
 
-### Claude 桌面版 / claude.ai
+</details>
 
-下载对应的 `.skill` 文件（[what-to-eat.skill](./what-to-eat.skill) / [video-coach.skill](./video-coach.skill) / [daily-english-practice.skill](./daily-english-practice.skill)），发到 Claude 对话里，点卡片上的 **Save skill** 即可。
+<details>
+<summary>Claude 桌面版 / 网页版（.skill 安装包）</summary>
+
+下载对应的 `.skill` 文件（[what-to-eat.skill](./what-to-eat.skill) / [video-coach.skill](./video-coach.skill) / [daily-english-practice.skill](./daily-english-practice.skill) / [health-plan.skill](./health-plan.skill)），发到对话里，点卡片上的 **Save skill** 即可。
+
+</details>
 
 ---
 
@@ -49,7 +62,7 @@ npx skills add ahebbx/skills -a claude-code -a codex
 - "晚上吃啥，累了不想做饭"
 - "早餐推荐一下，包子吃腻了"
 
-第一次会问你城市和状态；之后它会查当天天气、避开你最近 3 天吃过的、照顾营养均衡。吃完说一声吃了什么，它会记进 `~/.what-to-eat/饮食记录.md`（家目录统一路径，Claude Code / Codex 等工具、任何项目里问都是同一份记录）——记录越多，推荐越准。告诉它忌口（"我不吃香菜"）会永久记住。
+第一次会问你城市和状态；之后它会查当天天气、避开你最近 3 天吃过的、照顾营养均衡。吃完说一声吃了什么，它会记进 `~/.what-to-eat/饮食记录.md`（家目录统一路径，不管在哪个 Agent、哪个项目里问都是同一份记录）——记录越多，推荐越准。告诉它忌口（"我不吃香菜"）会永久记住。
 
 ---
 
@@ -94,10 +107,23 @@ npx skills add ahebbx/skills -a claude-code -a codex
 
 ### 定时自动练
 
-技能本身不含调度，接到各平台的定时能力上即可：
+技能本身不含调度：把「使用 daily-english-practice skill 开始今日练习」这句提示词，交给你所用 Agent 的定时任务功能即可（例如 Claude 的 Scheduled Task、Claude Code 的 `/loop`）。
 
-- **Claude 桌面版 / claude.ai**：建一个 Scheduled Task，提示词写「使用 daily-english-practice skill 开始今日练习」
-- **Claude Code**：用 `/loop` 或定时任务跑同样的提示词
+---
+
+## 健康方案 (health-plan)
+
+根据你的目标（减脂 / 增肌 / 改善体能 / 改善睡眠）、可用时间和场地，制定运动、饮食、睡眠、压力管理四维个性化方案；之后每天打卡记录进度，到检查点自动复盘——执行率低就简化，完成得好就小步加量（每周增量不超过 10%）。
+
+### 使用
+
+安装后直接说：
+
+- "帮我做个健康计划"
+- "今天走了 40 分钟，做了拉伸，精力 6 分"
+- "今天该练什么？"
+
+方案和进度固定存在 `~/.health-plan/`（`plan.md` 当前方案、`progress.md` 进度日志），任何 Agent 里触发都读写同一份数据。涉及慢性病、伤痛、孕期等情况会提醒先咨询医生。
 
 ---
 
@@ -118,13 +144,18 @@ npx skills add ahebbx/skills -a claude-code -a codex
 │   │       ├── SKILL.md          # 双轨点评流程
 │   │       └── scripts/
 │   │           └── prepare.sh    # 定位视频→抢救未存储→转写→抽帧
-│   └── daily-english-practice/
+│   ├── daily-english-practice/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/daily-english-practice/
+│   │       └── SKILL.md          # 课程主流程
+│   └── health-plan/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/daily-english-practice/
-│           └── SKILL.md          # 课程主流程
-├── what-to-eat.skill             # Claude 桌面版一键安装包
+│       └── skills/health-plan/
+│           └── SKILL.md          # 方案制定、打卡、复盘
+├── what-to-eat.skill             # .skill 一键安装包
 ├── video-coach.skill
-└── daily-english-practice.skill
+├── daily-english-practice.skill
+└── health-plan.skill
 ```
 
 ## License

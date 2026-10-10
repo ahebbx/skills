@@ -1,6 +1,8 @@
 {
   "name": "ahebbx-skills",
-  "owner": { "name": "ahebbx" },
+  "owner": {
+    "name": "ahebbx"
+  },
   "plugins": [
     {
       "name": "what-to-eat",
@@ -16,6 +18,11 @@
       "name": "daily-english-practice",
       "source": "./plugins/daily-english-practice",
       "description": "每日英语读写练习：当天新闻改编阅读+实用写作+弱点复习，学习记录追踪进步"
+    },
+    {
+      "name": "health-plan",
+      "source": "./plugins/health-plan",
+      "description": "健康方案规划与进度记录：运动、饮食、睡眠、压力管理四维方案，打卡记录与复盘调整"
     }
   ]
 }
