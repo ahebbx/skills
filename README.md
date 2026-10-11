@@ -106,9 +106,9 @@ npx skills remove -g          # 选择要卸载的技能
 </details>
 
 <details>
-<summary>ChatGPT 桌面版（插件市场，不用命令行）</summary>
+<summary>Codex 桌面端（插件市场，不用命令行）</summary>
 
-1. 打开 ChatGPT 桌面版，进入 **插件** 页面。
+1. 打开 Codex 桌面端，进入 **插件** 页面。
 2. 点右上角 **添加** → **添加插件市场**。
 3. **来源** 填 `https://github.com/ahebbx/skills`，「Git 引用」和「稀疏路径」留空，点 **添加市场**。
 4. 切到 **个人** 标签，会看到 **ahebbx-skills** 下的 4 个技能，点想要的技能右边的 **+** 安装。
