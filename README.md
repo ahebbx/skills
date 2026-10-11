@@ -105,6 +105,29 @@ npx skills remove -g          # 选择要卸载的技能
 
 </details>
 
+<details>
+<summary>ChatGPT 桌面版 / 网页版</summary>
+
+ChatGPT 也支持 Agent Skills（同一套 SKILL.md 格式），上传安装包就能用。
+
+1. 从 [Releases](https://github.com/ahebbx/skills/releases/latest) 下载想要的技能，比如 [what-to-eat.skill](https://github.com/ahebbx/skills/releases/latest/download/what-to-eat.skill)。如果上传时选不中这个文件，把后缀 `.skill` 改成 `.zip` 再试（它本来就是 zip 包）。
+2. 打开 ChatGPT，在左侧边栏找到 **Skills**（新版本在 **Plugins** → **Skills** 标签页里）。
+3. 点 **Create** → **Upload from your computer**，选刚下载的文件。
+4. 等 ChatGPT 扫描完成（显示 **Needs Review** 的话点开确认一下）。
+5. 新开一个对话，输入 `@` 选 **what-to-eat**，或者直接问「今天吃什么」。
+
+注意：
+
+- **套餐**：Skills 目前主要面向 Business / Enterprise / Edu 等套餐，个人 Plus / Pro 是否可用以你账号里能不能看到 Skills 入口为准；企业 / 教育账号可能需要管理员先开启。
+- **桌面版和网页版不同步**：两边要各上传一次。
+- **记录不会跨对话保存**：ChatGPT 在云端沙盒里运行，读写不到你电脑上的 `~/.what-to-eat/`。推荐照样能用，但「记得你吃过什么」只在当前对话里有效。想要长期记录，用上面的命令行方式装到 Codex 等本地 Agent。
+- **查天气**：需要对话开着联网搜索。
+- **视频教练用不了**：它要在你电脑上跑 ffmpeg 和 whisper，云端做不到；其余三个技能都可以装。
+
+菜单名称以 OpenAI 官方说明 [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt) 为准，2026 年里改过几次位置。
+
+</details>
+
 ---
 
 ## 今天吃什么 (what-to-eat)
