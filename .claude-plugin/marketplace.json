@@ -22,7 +22,7 @@
     {
       "name": "health-plan",
       "source": "./plugins/health-plan",
-      "description": "健康方案规划与进度记录：运动、饮食、睡眠、压力管理四维方案，打卡记录与复盘调整"
+      "description": "健康教练：运动、饮食、睡眠、压力四维方案，每天告诉你练什么，打卡记录、到期复盘，越用越贴合你"
     }
   ]
 }
