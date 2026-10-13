@@ -1,0 +1,6 @@
+{
+  "name": "goal-planner",
+  "description": "目标推进教练：把模糊目标问清楚、补全关键子目标，按优先级和可投入精力排出里程碑+本周任务，记录进度、定期复盘越用越准；数据存在 ~/.goal-planner/",
+  "version": "1.0.0",
+  "author": { "name": "ahebbx" }
+}
