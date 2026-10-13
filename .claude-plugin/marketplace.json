@@ -23,6 +23,11 @@
       "name": "health-plan",
       "source": "./plugins/health-plan",
       "description": "健康教练：运动、饮食、睡眠、压力四维方案，每天告诉你练什么，打卡记录、到期复盘，越用越贴合你"
+    },
+    {
+      "name": "goal-planner",
+      "source": "./plugins/goal-planner",
+      "description": "目标推进教练：问清模糊目标、补全关键子目标，按优先级和精力排出里程碑+本周任务，记录进度、复盘优化"
     }
   ]
 }

@@ -8,6 +8,7 @@
 | [视频表达教练 (video-coach)](#视频表达教练-video-coach) | 每天录视频练表达，AI 本地转写+看画面，双轨点评你的口播 |
 | [每日英语练习 (daily-english-practice)](#每日英语练习-daily-english-practice) | 每天 15 分钟：当天新闻练阅读、真实场景练写作，弱点靶向复习 |
 | [健康方案 (health-plan)](#健康方案-health-plan) | 运动、饮食、睡眠、压力四维方案，打卡记录、定期复盘 |
+| [目标推进 (goal-planner)](#目标推进-goal-planner) | 把模糊目标问清楚、拆解补全，按精力排出推进方案，记录进度持续优化 |
 
 ## 使用教程
 
@@ -74,6 +75,7 @@ npx skills remove -g          # 选择要卸载的技能
 | 今天吃什么 | `~/.what-to-eat/` | `C:\Users\<用户名>\.what-to-eat\` |
 | 每日英语 | `~/.daily-english-practice/` | `C:\Users\<用户名>\.daily-english-practice\` |
 | 健康方案 | `~/.health-plan/` | `C:\Users\<用户名>\.health-plan\` |
+| 目标推进 | `~/.goal-planner/` | `C:\Users\<用户名>\.goal-planner\` |
 | 视频教练 | `~/Movies/录视频练习/`（Linux 为 `~/Videos/录视频练习/`） | `C:\Users\<用户名>\Videos\录视频练习\` |
 
 ### 其他安装方式
@@ -94,6 +96,7 @@ npx skills remove -g          # 选择要卸载的技能
 /plugin install video-coach@ahebbx-skills
 /plugin install daily-english-practice@ahebbx-skills
 /plugin install health-plan@ahebbx-skills
+/plugin install goal-planner@ahebbx-skills
 ```
 
 </details>
@@ -101,7 +104,7 @@ npx skills remove -g          # 选择要卸载的技能
 <details>
 <summary>Claude 桌面版 / 网页版（.skill 安装包）</summary>
 
-从 [Releases](https://github.com/ahebbx/skills/releases/latest) 下载对应的 `.skill` 文件（[what-to-eat.skill](https://github.com/ahebbx/skills/releases/latest/download/what-to-eat.skill) / [video-coach.skill](https://github.com/ahebbx/skills/releases/latest/download/video-coach.skill) / [daily-english-practice.skill](https://github.com/ahebbx/skills/releases/latest/download/daily-english-practice.skill) / [health-plan.skill](https://github.com/ahebbx/skills/releases/latest/download/health-plan.skill)），发到对话里，点卡片上的 **Save skill** 即可。
+从 [Releases](https://github.com/ahebbx/skills/releases/latest) 下载对应的 `.skill` 文件（[what-to-eat.skill](https://github.com/ahebbx/skills/releases/latest/download/what-to-eat.skill) / [video-coach.skill](https://github.com/ahebbx/skills/releases/latest/download/video-coach.skill) / [daily-english-practice.skill](https://github.com/ahebbx/skills/releases/latest/download/daily-english-practice.skill) / [health-plan.skill](https://github.com/ahebbx/skills/releases/latest/download/health-plan.skill) / [goal-planner.skill](https://github.com/ahebbx/skills/releases/latest/download/goal-planner.skill)），发到对话里，点卡片上的 **Save skill** 即可。
 
 </details>
 
@@ -111,7 +114,7 @@ npx skills remove -g          # 选择要卸载的技能
 1. 打开 Codex 桌面端，进入 **插件** 页面。
 2. 点右上角 **添加** → **添加插件市场**。
 3. **来源** 填 `https://github.com/ahebbx/skills`，「Git 引用」和「稀疏路径」留空，点 **添加市场**。
-4. 切到 **个人** 标签，会看到 **ahebbx-skills** 下的 4 个技能，点想要的技能右边的 **+** 安装。
+4. 切到 **个人** 标签，会看到 **ahebbx-skills** 下的 5 个技能，点想要的技能右边的 **+** 安装。
 5. 新开一个对话，直接问「今天吃什么」。
 
 > ChatGPT 网页版没有插件市场，只能在 Skills 页面上传 [Releases](https://github.com/ahebbx/skills/releases/latest) 里的 `.skill` 安装包（Create → Upload from your computer），但网页版跑在云端，读写不到你电脑上的记录文件，「记得你吃过什么」只在当前对话里有效。
@@ -213,6 +216,30 @@ Windows 没有 Python 的话：`winget install Python.Python.3.12`。语音模�
 
 ---
 
+## 目标推进 (goal-planner)
+
+告诉它你的整体目标、已经想到的子目标和每周能投入多少精力，它会：
+
+- **先把目标问清楚**：怎么算达成、截止时间、为什么做、现在的起点——说不清时给你 2–3 个具体版本挑
+- **补全你没想到的事**：从完成标准倒推关键路径，补上前置条件、风险验证、收尾交付等必需事项（标注「AI 补充」和理由，你可以删）
+- **按优先级和精力排期**：关键路径 > 先验证最大的不确定性 > 高杠杆，每周只排 80% 精力留缓冲；时间不够会直说缺口，让你选砍范围、延期还是加投入
+- **近细远粗**：给出阶段里程碑 + 本周具体任务，多个目标并行时统一分配精力
+
+之后随时汇报进度，它会记录下来并学习你的执行规律（估时偏差、实际可用时间、容易拖的任务类型），每周复盘时据此重新排期——越用越贴合你。
+
+### 使用
+
+安装后直接说：
+
+- "帮我规划一下：明年 4 月前转行做 AI 产品经理，每周能投入 8 小时"
+- "访谈约到 1 个，花了 3 小时"
+- "今天该做什么？"
+- "复盘一下这周"
+
+数据固定存在 `~/.goal-planner/`（`profile.md` 画像与执行规律、`plan.md` 当前方案、`log.md` 进度日志、`goals/` 每个目标一份），任何 Agent 里触发都读写同一份数据。
+
+---
+
 ## 结构
 
 ```
@@ -241,10 +268,14 @@ ahebbx/skills
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── skills/daily-english-practice/
 │   │       └── SKILL.md                  # 课程主流程
-│   └── health-plan/
+│   ├── health-plan/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/health-plan/
+│   │       └── SKILL.md                  # 方案制定、打卡、复盘
+│   └── goal-planner/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/health-plan/
-│           └── SKILL.md                  # 方案制定、打卡、复盘
+│       └── skills/goal-planner/
+│           └── SKILL.md                  # 目标澄清、拆解排期、进度记录、复盘
 ├── scripts/
 │   └── build-skills.sh               # 打包 dist/*.skill（Claude 桌面版 / 网页版安装包）
 ├── tests/
