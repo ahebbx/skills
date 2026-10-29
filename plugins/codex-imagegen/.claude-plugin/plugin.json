@@ -1,0 +1,6 @@
+{
+  "name": "codex-imagegen",
+  "description": "生成商品主图等图片；可复用当前 Codex API 配置，安全解析密钥并检查、交付图片",
+  "version": "1.0.0",
+  "author": { "name": "ahebbx" }
+}

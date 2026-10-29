@@ -9,6 +9,7 @@
 | [每日英语练习 (daily-english-practice)](#每日英语练习-daily-english-practice) | 每天 15 分钟：当天新闻练阅读、真实场景练写作，弱点靶向复习 |
 | [健康方案 (health-plan)](#健康方案-health-plan) | 运动、饮食、睡眠、压力四维方案，打卡记录、定期复盘 |
 | [目标推进 (goal-planner)](#目标推进-goal-planner) | 把模糊目标问清楚、拆解补全，按精力排出推进方案，记录进度持续优化 |
+| [图片生成 (codex-imagegen)](#图片生成-codex-imagegen) | 生成商品主图、宣传图和封面；支持复用当前 Codex API 配置并检查交付 |
 
 ## 使用教程
 
@@ -97,6 +98,7 @@ npx skills remove -g          # 选择要卸载的技能
 /plugin install daily-english-practice@ahebbx-skills
 /plugin install health-plan@ahebbx-skills
 /plugin install goal-planner@ahebbx-skills
+/plugin install codex-imagegen@ahebbx-skills
 ```
 
 </details>
@@ -104,7 +106,7 @@ npx skills remove -g          # 选择要卸载的技能
 <details>
 <summary>Claude 桌面版 / 网页版（.skill 安装包）</summary>
 
-从 [Releases](https://github.com/ahebbx/skills/releases/latest) 下载对应的 `.skill` 文件（[what-to-eat.skill](https://github.com/ahebbx/skills/releases/latest/download/what-to-eat.skill) / [video-coach.skill](https://github.com/ahebbx/skills/releases/latest/download/video-coach.skill) / [daily-english-practice.skill](https://github.com/ahebbx/skills/releases/latest/download/daily-english-practice.skill) / [health-plan.skill](https://github.com/ahebbx/skills/releases/latest/download/health-plan.skill) / [goal-planner.skill](https://github.com/ahebbx/skills/releases/latest/download/goal-planner.skill)），发到对话里，点卡片上的 **Save skill** 即可。
+从 [Releases](https://github.com/ahebbx/skills/releases/latest) 下载对应的 `.skill` 文件（[what-to-eat.skill](https://github.com/ahebbx/skills/releases/latest/download/what-to-eat.skill) / [video-coach.skill](https://github.com/ahebbx/skills/releases/latest/download/video-coach.skill) / [daily-english-practice.skill](https://github.com/ahebbx/skills/releases/latest/download/daily-english-practice.skill) / [health-plan.skill](https://github.com/ahebbx/skills/releases/latest/download/health-plan.skill) / [goal-planner.skill](https://github.com/ahebbx/skills/releases/latest/download/goal-planner.skill) / [codex-imagegen.skill](https://github.com/ahebbx/skills/releases/latest/download/codex-imagegen.skill)），发到对话里，点卡片上的 **Save skill** 即可。
 
 </details>
 
@@ -114,7 +116,7 @@ npx skills remove -g          # 选择要卸载的技能
 1. 打开 Codex 桌面端，进入 **插件** 页面。
 2. 点右上角 **添加** → **添加插件市场**。
 3. **来源** 填 `https://github.com/ahebbx/skills`，「Git 引用」和「稀疏路径」留空，点 **添加市场**。
-4. 切到 **个人** 标签，会看到 **ahebbx-skills** 下的 5 个技能，点想要的技能右边的 **+** 安装。
+4. 切到 **个人** 标签，会看到 **ahebbx-skills** 下的 6 个技能，点想要的技能右边的 **+** 安装。
 5. 新开一个对话，直接问「今天吃什么」。
 
 > ChatGPT 网页版没有插件市场，只能在 Skills 页面上传 [Releases](https://github.com/ahebbx/skills/releases/latest) 里的 `.skill` 安装包（Create → Upload from your computer），但网页版跑在云端，读写不到你电脑上的记录文件，「记得你吃过什么」只在当前对话里有效。
@@ -240,6 +242,23 @@ Windows 没有 Python 的话：`winget install Python.Python.3.12`。语音模�
 
 ---
 
+## 图片生成 (codex-imagegen)
+
+把商品主图、服务宣传图、封面这类需求直接做成图片交付，而不是只给提示词：先整理用途、比例、逐字文案和风格写成提示词文件，生成后打开实际图片检查中文、排版和裁切，有错就出新版本，不覆盖已有文件。不编造价格、服务承诺或官方身份。
+
+内置生图工具不可用时，可以复用你当前 Codex 的 API 配置调用图片接口：附带脚本从 `~/.codex/config.toml` 和 `auth.json` 读取选中的服务地址与密钥，只在内存和子进程环境里使用，不打印、不写进命令行参数或文件；ChatGPT 登录（OAuth）的令牌不会被拿来当 API key。调用 API 会产生费用，用户没同意前不会调用。
+
+### 使用
+
+安装后直接说：
+
+- "帮我做一张 Codex 安装服务的商品主图，黑灰绿风格"
+- "用我当前的 Codex 配置生成一张公众号封面"
+
+需要 Python 3.11+、`openai` SDK，以及 Codex 自带的 imagegen 工具（默认在 `~/.codex/skills/.system/imagegen/`，别的位置用 `--cli` 指定）。默认模型 `gpt-image-2`；你的服务商是否支持生图，以实际请求结果为准。
+
+---
+
 ## 结构
 
 ```
@@ -272,10 +291,18 @@ ahebbx/skills
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── skills/health-plan/
 │   │       └── SKILL.md                  # 方案制定、打卡、复盘
-│   └── goal-planner/
+│   ├── goal-planner/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/goal-planner/
+│   │       └── SKILL.md                  # 目标澄清、拆解排期、进度记录、复盘
+│   └── codex-imagegen/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/goal-planner/
-│           └── SKILL.md                  # 目标澄清、拆解排期、进度记录、复盘
+│       └── skills/codex-imagegen/
+│           ├── SKILL.md                  # 生图、检查、交付流程
+│           ├── references/
+│           │   └── product-image.md      # 商品主图提示词案例
+│           └── scripts/
+│               └── generate_with_codex.py    # 安全复用 Codex API 配置调用 imagegen
 ├── scripts/
 │   └── build-skills.sh               # 打包 dist/*.skill（Claude 桌面版 / 网页版安装包）
 ├── tests/

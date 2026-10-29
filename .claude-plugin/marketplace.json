@@ -28,6 +28,11 @@
       "name": "goal-planner",
       "source": "./plugins/goal-planner",
       "description": "目标推进教练：问清模糊目标、补全关键子目标，按优先级和精力排出里程碑+本周任务，记录进度、复盘优化"
+    },
+    {
+      "name": "codex-imagegen",
+      "source": "./plugins/codex-imagegen",
+      "description": "图片生成与商品主图：复用当前 Codex API 配置，安全传递凭据，检查中文并交付图片"
     }
   ]
 }
